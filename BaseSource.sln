@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Hosts", "4.Hosts", "{5B2F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{FF8870F4-883C-4532-8AB2-AA82C4D78181}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSource.Shared", "BaseSource.Shared\BaseSource.Shared.csproj", "{49F45A38-C7D1-44E2-917E-889076614A31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseSource.Shared", "BaseSource.Shared\BaseSource.Shared.csproj", "{49F45A38-C7D1-44E2-917E-889076614A31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSource.ViewModels", "BaseSource.ViewModels\BaseSource.ViewModels.csproj", "{035F4032-83C6-4B23-A045-C2A01DBA5A60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseSource.ViewModels", "BaseSource.ViewModels\BaseSource.ViewModels.csproj", "{035F4032-83C6-4B23-A045-C2A01DBA5A60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSource.Data", "BaseSource.Data\BaseSource.Data.csproj", "{4E73422C-D098-4CD0-8FD4-BDCAA727C781}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseSource.Data", "BaseSource.Data\BaseSource.Data.csproj", "{4E73422C-D098-4CD0-8FD4-BDCAA727C781}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exceptions", "Exceptions", "{847CE60D-8FC0-480B-84D1-7D9404F4B05D}"
 EndProject
@@ -31,13 +31,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{6F223668-8A9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebUI", "WebUI", "{2CB7EF2F-4C76-4F4D-BA36-8A871D19D3D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSource.API", "BaseSource.API\BaseSource.API.csproj", "{CC45425E-6B39-4CE4-B22C-384CAA9F5230}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseSource.API", "BaseSource.API\BaseSource.API.csproj", "{CC45425E-6B39-4CE4-B22C-384CAA9F5230}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSource.ApiIntegration", "BaseSource.ApiIntegration\BaseSource.ApiIntegration.csproj", "{E6481D21-8098-4411-8B2F-A195EF3D4E86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseSource.ApiIntegration", "BaseSource.ApiIntegration\BaseSource.ApiIntegration.csproj", "{E6481D21-8098-4411-8B2F-A195EF3D4E86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSource.AppUI", "BaseSource.AppUI\BaseSource.AppUI.csproj", "{BDACF8A0-8A14-4468-A12D-6D680C945A32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseSource.AppUI", "BaseSource.AppUI\BaseSource.AppUI.csproj", "{BDACF8A0-8A14-4468-A12D-6D680C945A32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSource.Services", "BaseSource.Services\BaseSource.Services.csproj", "{8A3FC7CF-8E6B-40AC-9733-EBC075142AB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseSource.Services", "BaseSource.Services\BaseSource.Services.csproj", "{8A3FC7CF-8E6B-40AC-9733-EBC075142AB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseSource.Upload", "BaseSource.Upload\BaseSource.Upload.csproj", "{60D20C94-487E-4305-997E-96E3AC9C898C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{8A3FC7CF-8E6B-40AC-9733-EBC075142AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A3FC7CF-8E6B-40AC-9733-EBC075142AB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A3FC7CF-8E6B-40AC-9733-EBC075142AB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60D20C94-487E-4305-997E-96E3AC9C898C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60D20C94-487E-4305-997E-96E3AC9C898C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60D20C94-487E-4305-997E-96E3AC9C898C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60D20C94-487E-4305-997E-96E3AC9C898C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{E6481D21-8098-4411-8B2F-A195EF3D4E86} = {2CB7EF2F-4C76-4F4D-BA36-8A871D19D3D1}
 		{BDACF8A0-8A14-4468-A12D-6D680C945A32} = {2CB7EF2F-4C76-4F4D-BA36-8A871D19D3D1}
 		{8A3FC7CF-8E6B-40AC-9733-EBC075142AB2} = {E2D1C14E-7A67-4CE8-A3AE-8C4C70E9C291}
+		{60D20C94-487E-4305-997E-96E3AC9C898C} = {6F223668-8A9D-4C77-8CE8-A8E636668A8A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {636C7DC0-8F18-42AE-BCFD-6A4236D7746E}

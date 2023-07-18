@@ -58,7 +58,7 @@ namespace BaseSource.Data.Migrations
                         new
                         {
                             Id = "c1105ce5-9dbc-49a9-a7d5-c963b6daa62a",
-                            ConcurrencyStamp = "ae17f2b4-8a2c-4ab3-a851-71b61c6769f0",
+                            ConcurrencyStamp = "f6b8d682-2e67-40de-b67c-1410e39cf869",
                             Description = "Administrator role",
                             Name = "Admin",
                             NormalizedName = "Admin"
@@ -188,14 +188,14 @@ namespace BaseSource.Data.Migrations
                         {
                             Id = "ffded6b0-3769-4976-841b-69459049a62d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "406ba5c6-2bba-4afb-aaac-f695f85424a4",
+                            ConcurrencyStamp = "5ea40646-8bfd-49a7-aceb-08e7925a1500",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "superadmin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBUnHhZXk2hkWXm4ARxA0GJi7ygIIU0mTJYjYFOVV0XI0UCyEcJ2gs5yVrCxIVFHBw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBbIx+TdFYk8guC+4XlSrzz8GiESHgafGH4vJ5josbUkqt3n41A1uc1BdVYx5Mj+ow==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -291,6 +291,35 @@ namespace BaseSource.Data.Migrations
                     b.ToTable("AppUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BaseSource.Data.Entities.CategoryProject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoryProjects", (string)null);
+                });
+
             modelBuilder.Entity("BaseSource.Data.Entities.ConfigSystem", b =>
                 {
                     b.Property<int>("Id")
@@ -322,6 +351,54 @@ namespace BaseSource.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ConfigSystems", (string)null);
+                });
+
+            modelBuilder.Entity("BaseSource.Data.Entities.PetProject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CategoryProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkDemo")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("LinkSourceCode")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryProjectId");
+
+                    b.ToTable("PetProjects", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.EntityFrameworkCore.AutoHistory", b =>
@@ -419,6 +496,17 @@ namespace BaseSource.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("BaseSource.Data.Entities.PetProject", b =>
+                {
+                    b.HasOne("BaseSource.Data.Entities.CategoryProject", "CategoryProject")
+                        .WithMany("PetProjects")
+                        .HasForeignKey("CategoryProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CategoryProject");
+                });
+
             modelBuilder.Entity("BaseSource.Data.Entities.AppRole", b =>
                 {
                     b.Navigation("RoleClaims");
@@ -435,6 +523,11 @@ namespace BaseSource.Data.Migrations
                     b.Navigation("Tokens");
 
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("BaseSource.Data.Entities.CategoryProject", b =>
+                {
+                    b.Navigation("PetProjects");
                 });
 #pragma warning restore 612, 618
         }

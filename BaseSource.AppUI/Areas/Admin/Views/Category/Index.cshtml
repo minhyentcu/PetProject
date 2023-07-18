@@ -1,0 +1,235 @@
+﻿@using BaseSource.ViewModels.Project;
+@model List<CategoryInfoDto>
+@{
+    ViewData["Title"] = "Danh sách Danh mục";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>@ViewData["Title"]</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+            <div class="breadcrumb-item"><a href="#">Danh mục</a></div>
+            <div class="breadcrumb-item">@ViewData["Title"]</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>@ViewData["Title"]</h4>
+                        <button class="btn btn-success btnCreate">Thêm mới</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tableCategory">
+                                <thead>
+                                    <tr>
+                                        <th>Tên</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Publish</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Name</td>
+                                            <td>@item.CreatedTime.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.Published</td>
+                                            <td>
+                                                <button class="btn btn-primary" onclick="update('@item.Id','@item.Name')">Cập nhật</button>
+                                                <button class="btn btn-danger" onclick="delete('@item.Id')">Xóa</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<div class="modal fade" tabindex="-1" role="dialog" id="createModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" id="formCreate" action="/admin/Category/Create">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm mới Danh mục</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-4">
+                        <label class="">Tên danh mục</label>
+                        <div class="">
+                            <input name="Name" placeholder="Nhập tên danh mục" class="form-control" />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Tạo mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" id="formDelete" action="/admin/Category/Delete">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa danh mục?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có muốn xóa danh mục này?</p>
+                    <input class="form-control" name="Id" type="hidden" />
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Xác nhận</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="updateModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" id="formUpdate" action="/admin/Category/Update">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật Danh mục</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-4">
+                        <label class="">Tên danh mục</label>
+                        <div class="">
+                            <input class="form-control" name="Id" type="hidden" />
+                            <input name="Name" placeholder="Nhập tên danh mục" class="form-control" />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Tạo mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $("#tableCategory").DataTable({
+
+            });
+            $('body').on('click', '.btnCreate', function () {
+                let id = $(this).attr('data-id');
+                $('#createModal').modal('show');
+            });
+        });
+        function delete (id){
+            $('#deleteModal').modal('show');
+            $('#formDelete input[name="Id"]').val(id);
+        }
+        function update(id, name) {
+            $('#updateModal').modal('show');
+            $('#formUpdate input[name="Id"]').val(id);
+            $('#formUpdate input[name="Name"]').val(name);
+        }
+        $('body').on('submit','#formCreate',function(e){
+            e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/category/create",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        switch (response.code) {
+                            case 1:
+                                window.location = '/admin/category';
+                                break;
+                            case -2:
+
+                                iziToast.error({
+                                    title: 'Lỗi!',
+                                    message: response.err,
+                                    position: 'topRight'
+                                });
+                                break;
+                        }
+
+                    }
+                });
+        })
+        $('body').on('submit','#formUpdate',function(e){
+            e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/category/update",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        switch (response.code) {
+                            case 1:
+                                window.location = '/admin/category';
+                                break;
+                            case -2:
+
+                                iziToast.error({
+                                    title: 'Lỗi!',
+                                    message: response.err,
+                                    position: 'topRight'
+                                });
+                                break;
+                        }
+
+                    }
+                });
+        })
+        $('body').on('submit','#formDelete',function(e){
+            e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/category/delete",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        switch (response.code) {
+                            case 1:
+                                window.location = '/admin/category';
+                                break;
+                            case -2:
+
+                                iziToast.error({
+                                    title: 'Lỗi!',
+                                    message: response.err,
+                                    position: 'topRight'
+                                });
+                                break;
+                        }
+
+                    }
+                });
+        })
+    </script>
+}
+

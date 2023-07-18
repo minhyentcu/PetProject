@@ -5,4 +5,15 @@
         File,
         Folder
     }
+    public enum EUploadDirectoryType : byte
+    {
+        Project
+    }
+    public enum EUploadFileType : byte
+    {
+        All = 1,
+        Image,
+        Video,
+        Doc
+    }
 }

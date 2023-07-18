@@ -8,4 +8,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\BaseSource.Shared\BaseSource.Shared.csproj" />
+	</ItemGroup>
 </Project>

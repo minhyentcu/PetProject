@@ -23,7 +23,9 @@
         public const string LanguageChina = "zh";
         public const string LanguageIndonesia = "id";
         public const string LanguageDefault = "vi";
+        public const string UploadApiClient = "UploadApiClient";
     }
+
     public static class ErrorCodeJson
     {
         public const short ErrorList = -1;

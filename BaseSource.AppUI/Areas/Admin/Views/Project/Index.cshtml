@@ -1,0 +1,74 @@
+﻿@using BaseSource.ViewModels.Project;
+@model List<PetProjectDto>
+@{
+    ViewData["Title"] = "Danh sách Project";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>@ViewData["Title"]</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+            <div class="breadcrumb-item"><a href="#">Danh sách</a></div>
+            <div class="breadcrumb-item">@ViewData["Title"]</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>@ViewData["Title"]</h4>
+                        <a class="btn btn-success" href="/admin/project/create">Thêm mới</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tableProject">
+                                <thead>
+                                    <tr>
+                                        <th>Tên</th>
+                                        <th>Danh mục</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Publish</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Name</td>
+                                            <td><span class="badge badge-primary">@item.CategoryName</span> </td>
+                                            <td>@item.CreatedTime.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.Published</td>
+                                            <td>
+                                                <button class=" btn btn-primary">Chi tiết</button>
+                                                <button class="btn btn-danger" onclick="delete('@item.Id')">Xóa</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $("#tableProject").DataTable({
+
+            });
+        });
+    </script>
+}
+
+

@@ -1,4 +1,7 @@
-﻿using BaseSource.ApiIntegration.WebApi.Setting;
+﻿using BaseSource.ApiIntegration.WebApi.Category;
+using BaseSource.ApiIntegration.WebApi.Project;
+using BaseSource.ApiIntegration.WebApi.ProjectClient;
+using BaseSource.ApiIntegration.WebApi.Setting;
 using BaseSource.ApiIntegration.WebApi.User;
 using BaseSource.ApiIntegration.WebApi.UserAdmin;
 
@@ -16,6 +19,10 @@ namespace BaseSource.AppUI.Configuration
             services.AddTransient<IConfigSettingApiClient, ConfigSettingApiClient>();
 
             services.AddTransient<IUserAdminApiClient, UserAdminApiClient>();
+
+            services.AddTransient<IProjectAdminApiClient, ProjectAdminApiClient>();
+            services.AddTransient<IProjectApiClient, ProjectApiClient>();
+            services.AddTransient<ICategoryService, CategoryService>();
 
             return services;
         }

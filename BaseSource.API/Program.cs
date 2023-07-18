@@ -17,7 +17,12 @@ builder.Host.ConfigureLogging(logging =>
     // logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Information);
 
 });
-
+//add config httpClient
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient(SystemConstants.UploadApiClient, (sp, httpClient) =>
+{
+    httpClient.BaseAddress = new Uri(builder.Configuration.GetValue<string>("UploadApiEndpoint"));
+});
 //add db context and unitOfwork
 builder.Services.AddDbContext<BaseSourceDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)))
                 .AddUnitOfWork<BaseSourceDbContext>();
