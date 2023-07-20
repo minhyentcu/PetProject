@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BaseSource.Data.Entities;
+using BaseSource.ViewModels.Setting;
 using BaseSource.ViewModels.User;
 
 namespace BaseSource.Services.MappingProfile
@@ -13,8 +14,11 @@ namespace BaseSource.Services.MappingProfile
 
             CreateMap<AppUser, UserInfoResponse>();
             #endregion
+            #region Setting
+            
+                CreateMap<ConfigSystem, ConfigSettingVm>();
+            #endregion
 
-           
         }
 
     }

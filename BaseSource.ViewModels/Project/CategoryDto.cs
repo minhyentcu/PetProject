@@ -5,6 +5,7 @@ namespace BaseSource.ViewModels.Project
     public class CategoryRequestDto : PageQuery
     {
         public string Name { get; set; }
+        public bool IsAll { get; set; }
     }
     public class CategoryCreateDto
     {

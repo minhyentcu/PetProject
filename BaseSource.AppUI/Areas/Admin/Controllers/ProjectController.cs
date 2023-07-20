@@ -78,10 +78,24 @@ namespace BaseSource.AppUI.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var errors = ModelState
+                    .Keys
+                    .Where(k => ModelState[k].Errors.Count > 0)
+                    .Select(k => new
+                    {
+                        propertyName = k,
+                        errorMessage = ModelState[k].Errors[0].ErrorMessage
+                    }).ToList();
+                if (errors.Any(x => x.errorMessage == "CategoryProjectId"))
+                {
+                    ModelState.AddModelError("CategoryProjectId", "Danh mục không được để trống, hoặc không hợp lệ!");
+                }
+
                 var categorys = await _categoryService.GetAllByFilterAsync(new CategoryRequestDto
                 {
                     Page = 1,
-                    PageSize = 200
+                    PageSize = 200,
+                    IsAll = true
                 });
                 if (categorys == null || categorys.ResultObj == null)
                 {
@@ -90,15 +104,21 @@ namespace BaseSource.AppUI.Areas.Admin.Controllers
                 ViewBag.Categorys = categorys.ResultObj.Items;
                 return View(model);
             }
+
+            if (model.ImageFile == null)
+            {
+                ModelState.AddModelError("ImageFile", "Hình ảnh không được để trống, hoặc không hợp lệ!");
+            }
             var result = await _projectAdminApiClient.CreateAsync(model);
             if (result == null || !result.IsSuccessed)
             {
 
-                ModelState.AddModelError("", result?.ResultObj ?? "Tạo mới Project không thành công!");
+                ModelState.AddModelError("", result?.Message ?? "Tạo mới Project không thành công!");
                 var categorys = await _categoryService.GetAllByFilterAsync(new CategoryRequestDto
                 {
                     Page = 1,
-                    PageSize = 200
+                    PageSize = 200,
+                    IsAll = true
                 });
                 if (categorys == null || categorys.ResultObj == null)
                 {
@@ -146,14 +166,24 @@ namespace BaseSource.AppUI.Areas.Admin.Controllers
             var categorys = await _categoryService.GetAllByFilterAsync(new CategoryRequestDto
             {
                 Page = 1,
-                PageSize = 200
+                PageSize = 200,
+                IsAll = true
             });
             if (categorys == null || categorys.ResultObj == null)
             {
                 return NotFound();
             }
             ViewBag.Categorys = categorys.ResultObj.Items;
-            return View(projectInfo.ResultObj);
+            return View(new PetProjectUpdateDto
+            {
+                Id = projectInfo.ResultObj.Id,
+                CategoryProjectId = projectInfo.ResultObj.CategoryProjectId,
+                Image = projectInfo.ResultObj.Image,
+                LinkDemo = projectInfo.ResultObj.LinkDemo,
+                LinkSourceCode = projectInfo.ResultObj.LinkSourceCode,
+                Name = projectInfo.ResultObj.Name,
+                Description = projectInfo.ResultObj.Description,
+            });
         }
         [HttpPost]
         public async Task<IActionResult> Update(int id, PetProjectUpdateDto model)
@@ -163,7 +193,8 @@ namespace BaseSource.AppUI.Areas.Admin.Controllers
                 var categorys = await _categoryService.GetAllByFilterAsync(new CategoryRequestDto
                 {
                     Page = 1,
-                    PageSize = 200
+                    PageSize = 200,
+                    IsAll = true
                 });
                 if (categorys == null || categorys.ResultObj == null)
                 {
@@ -180,7 +211,8 @@ namespace BaseSource.AppUI.Areas.Admin.Controllers
                 var categorys = await _categoryService.GetAllByFilterAsync(new CategoryRequestDto
                 {
                     Page = 1,
-                    PageSize = 200
+                    PageSize = 200,
+                    IsAll = true
                 });
                 if (categorys == null || categorys.ResultObj == null)
                 {

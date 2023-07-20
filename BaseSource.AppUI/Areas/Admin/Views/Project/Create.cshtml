@@ -2,6 +2,7 @@
 @model PetProjectCreateDto
 @{
     ViewData["Title"] = "Thêm mới Project";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var categorys = ViewBag.Categorys as List<CategoryInfoDto>;
 }
 
@@ -24,9 +25,9 @@
                         <h4>@ViewData["Title"]</h4>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="/admin/user/create">
+                        <form method="post" action="/admin/project/create" enctype="multipart/form-data">
                             <div class="row">
-
+                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="col-12">
                                     <h6>@ViewData["Title"]</h6>
                                     <div class="form-group mb-4">
@@ -53,21 +54,32 @@
                                     </div>
                                     <div class="form-group mb-4">
                                         <label class="">Danh mục</label>
-                                        <select  asp-for="CategoryProjectId" class="form-control select2" required>
+                                        <select asp-for="CategoryProjectId" class="form-control select2" required>
                                             <option>--Chọn Danh mục--</option>
                                             @foreach (var item in categorys)
                                             {
                                                 <option value="@item.Id">@item.Name</option>
                                             }
-                                            <span asp-validation-for="CategoryProjectId" class="text-danger"></span>
-                                        </select>
-                                    </div>
 
+                                        </select>
+                                        <span asp-validation-for="CategoryProjectId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group  mb-4">
+                                        <label >Hình ảnh</label>
+                                        <div class="">
+                                            <div id="image-preview" class="image-preview">
+                                                <label for="image-upload" id="image-label">Choose File</label>
+                                                <input type="file" asp-for="ImageFile" id="image-upload" />
+                                              
+                                            </div>
+                                              <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                        </div>
+                                    </div>
                                     <div class="form-group mb-4">
                                         <label class="">Thông tin Project</label>
                                         <div class="">
 
-                                            <textarea asp-for="Description"  class="summernote-simple"></textarea>
+                                            <textarea asp-for="Description" class="summernote-simple"></textarea>
                                             <span asp-validation-for="Name" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -75,10 +87,10 @@
 
                             </div>
                             <div class="form-group row mb-4">
-                                <label class="col-form-label text-md-right col-12 col-md-4 col-lg-4"></label>
+                               
                                 <div class="buttons col-sm-12 col-md-8">
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <button type="submit" class="btn btn-info btn-lg btn-icon btn-setting"><i class="fas fa-check"></i>&ensp;Thêm mới</button>
+                                   
+                                    <button type="submit" class="btn btn-success btn-lg  ">Thêm mới</button>
                                 </div>
                             </div>
                         </form>
@@ -91,7 +103,15 @@
 
 @section Scripts{
     <script>
-
+        $.uploadPreview({
+            input_field: "#image-upload",   // Default: .image-upload
+            preview_box: "#image-preview",  // Default: .image-preview
+            label_field: "#image-label",    // Default: .image-label
+            label_default: "Choose File",   // Default: Choose File
+            label_selected: "Change File",  // Default: Change File
+            no_label: false,                // Default: false
+            success_callback: null          // Default: null
+        });
     </script>
 }
 

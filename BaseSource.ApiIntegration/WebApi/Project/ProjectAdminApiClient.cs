@@ -26,7 +26,7 @@ namespace BaseSource.ApiIntegration.WebApi.Project
                 multiContent.Add(fileStreamContent, "ImageFile", model.ImageFile.FileName);
             }
             multiContent.Add(new StringContent(model.Name), "Name");
-            multiContent.Add(new StringContent(model.Description.ToString()), "Description");
+            multiContent.Add(new StringContent(model.Description?.ToString()?? string.Empty), "Description");
             multiContent.Add(new StringContent(model.LinkDemo.ToString()), "LinkDemo");
             multiContent.Add(new StringContent(model.LinkSourceCode.ToString()), "LinkSourceCode");
             multiContent.Add(new StringContent(model.Image ?? string.Empty), "Image");

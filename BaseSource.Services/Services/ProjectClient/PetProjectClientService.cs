@@ -32,7 +32,8 @@ namespace BaseSource.Services.Services.ProjectClient
         {
             var _repository = _unitOfWork.GetRepository<PetProject>();
             var query = _repository.Queryable().AsNoTracking();
-            if (string.IsNullOrEmpty(model.Name))
+            query = query.Where(x => x.DeletedTime == null && x.Published);
+            if (!string.IsNullOrEmpty(model.Name))
             {
                 model.Name = model.Name.Trim().ToLower();
                 query = query.Where(x => x.Name.ToLower() == model.Name);
@@ -43,10 +44,10 @@ namespace BaseSource.Services.Services.ProjectClient
                 {
                     Description = x.Description,
                     Id = x.Id,
-                    Image = _uploadService.CombineHostUrl(x.Name),
+                    Image = _uploadService.CombineHostUrl(x.Image),
                     LinkDemo = x.LinkDemo,
                     LinkSourceCode = x.LinkSourceCode,
-                    Name = x.Name,
+                    Name = x.Name.Trim(),
                     Slug = x.Slug,
                 }, orderBy: x => x.OrderByDescending(i => i.CreatedTime),
                 pageIndex: model.Page, pageSize: model.PageSize);
@@ -56,12 +57,12 @@ namespace BaseSource.Services.Services.ProjectClient
         {
             var _repository = _unitOfWork.GetRepository<PetProject>();
             return await _repository.GetFirstOrDefaultAsync(
-                predicate: x => x.Slug == slug, disableTracking: true,
+                predicate: x => x.Slug == slug && x.DeletedTime==null && x.Published, disableTracking: true,
                 selector: x => new PetProjectDto
                 {
                     Description = x.Description,
                     Id = x.Id,
-                    Image = _uploadService.CombineHostUrl(x.Name),
+                    Image = _uploadService.CombineHostUrl(x.Image),
                     LinkDemo = x.LinkDemo,
                     LinkSourceCode = x.LinkSourceCode,
                     Name = x.Name,

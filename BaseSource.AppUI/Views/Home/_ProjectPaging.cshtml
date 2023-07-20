@@ -1,0 +1,33 @@
+﻿@using BaseSource.ViewModels.Project;
+@using System.Text.RegularExpressions;
+@model List<PetProjectDto>
+@{
+    Layout = null;
+}
+@foreach (var item in Model)
+{
+    <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" >
+        <div class="portfolio-wrap">
+            <figure>
+                <a href="/project/@item.Slug">  <img src="@item.Image" class="img-fluid" alt="" /></a>
+
+                @* <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>*@
+            </figure>
+
+            <div class="portfolio-info" style="text-align:unset !important; height:110px !important; text-transform: unset !important;padding:12px !important">
+                <h6><a href="/project/@item.Slug"> <b>@item.Name</b></a></h6>
+                <p>
+                    @if (!string.IsNullOrEmpty(item.Description))
+                    {
+                        var data = Regex.Replace(item.Description, "<.*?>", string.Empty);
+                        if (data.Length > 100)
+                        {
+                            data = $"{data.Substring(0, 99)}...";
+                        }
+                        <b style="color:black !important;text-transform: initial !important">@data</b>
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+}

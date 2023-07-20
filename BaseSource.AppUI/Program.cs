@@ -93,6 +93,10 @@ app.UseEndpoints(endpoints =>
                endpoints.MapControllerRoute(
                    name: "default",
                    pattern: "{controller=Home}/{action=Index}/{id?}");
+               endpoints.MapControllerRoute(
+                   name: "PostWithSlug",
+                   pattern: "{controller=Home}/{action=ProjectInfo}/{slug}"
+               );
            });
 
 app.Run();

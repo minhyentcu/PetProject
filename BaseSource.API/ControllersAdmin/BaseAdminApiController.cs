@@ -6,7 +6,7 @@ namespace BaseSource.API.ControllersAdmin
 {
     [ApiController]
     [Authorize(Roles = "Admin")]
-    [Route("api/admin/[controller]")]
+    [Route("/api/admin/[controller]")]
 
     public class BaseAdminApiController : ControllerBase
     {

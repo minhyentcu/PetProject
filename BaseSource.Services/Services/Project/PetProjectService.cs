@@ -68,6 +68,7 @@ namespace BaseSource.Services.Services.Project
                     Published = true,
                     Image = model.Image,
                     CategoryProjectId = model.CategoryProjectId,
+                    Slug = slugProject
                 });
                 await _unitOfWork.SaveChangesAsync();
                 return new KeyValuePair<bool, string>(true, string.Empty);
@@ -106,6 +107,7 @@ namespace BaseSource.Services.Services.Project
         {
             var _repository = _unitOfWork.GetRepository<PetProject>();
             var query = _repository.Queryable().AsNoTracking();
+            query = query.Where(x => x.DeletedTime == null);
             if (!string.IsNullOrEmpty(model.Name))
             {
                 model.Name = model.Name.Trim().ToLower();
@@ -117,10 +119,13 @@ namespace BaseSource.Services.Services.Project
                 {
                     Description = x.Description,
                     Id = x.Id,
-                    Image = _uploadService.CombineHostUrl(x.Name),
+                    Image = _uploadService.CombineHostUrl(x.Image),
                     LinkDemo = x.LinkDemo,
                     LinkSourceCode = x.LinkSourceCode,
-                    Name = x.Name
+                    Name = x.Name,
+                    CreatedTime = x.CreatedTime,
+                    Published = x.Published,
+                    CategoryName = x.CategoryProject.Name
                 }, orderBy: x => x.OrderByDescending(i => i.CreatedTime),
                 pageIndex: model.Page, pageSize: model.PageSize);
         }
@@ -129,15 +134,17 @@ namespace BaseSource.Services.Services.Project
         {
             var _repository = _unitOfWork.GetRepository<PetProject>();
             return await _repository.GetFirstOrDefaultAsync(
-                predicate: x => x.Id == id, disableTracking: true,
+                predicate: x => x.Id == id && x.DeletedTime == null && x.Published, disableTracking: true,
                 selector: x => new PetProjectDto
                 {
                     Description = x.Description,
                     Id = x.Id,
-                    Image = _uploadService.CombineHostUrl(x.Name),
+                    Image = _uploadService.CombineHostUrl(x.Image),
                     LinkDemo = x.LinkDemo,
                     LinkSourceCode = x.LinkSourceCode,
-                    Name = x.Name
+                    Name = x.Name,
+                    CategoryProjectId = x.CategoryProjectId,
+                    CategoryName = x.CategoryProject.Name
                 });
         }
 
@@ -171,7 +178,7 @@ namespace BaseSource.Services.Services.Project
                 var _repository = _unitOfWork.GetRepository<PetProject>();
 
                 var slugProject = UrlHelper.GenerateSlug(model.Name);
-                
+
                 var projectEntity = await _repository.GetFirstOrDefaultAsync(
                     predicate: x => x.Id == id);
                 if (projectEntity == null)

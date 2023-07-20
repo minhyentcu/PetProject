@@ -38,7 +38,7 @@ namespace BaseSource.Services.Services.Category
                 }
                 _repository.Insert(new CategoryProject
                 {
-                    Name = name,
+                    Name = model.Name.Trim(),
                     CreatedTime = DateTime.Now,
                     Published = true,
                     Slug = slugCategory
@@ -82,9 +82,15 @@ namespace BaseSource.Services.Services.Category
             var _repository = _unitOfWork.GetRepository<CategoryProject>();
 
             var query = _repository.Queryable().AsNoTracking();
+
+            query = query.Where(x => x.DeletedTime == null);
             if (!string.IsNullOrEmpty(model.Name))
             {
                 model.Name = model.Name.Trim();
+            }
+            if (model.IsAll)
+            {
+                query = query.Where(x => x.Published);
             }
             return await _repository.GetStagesPagedListAsync(
                 stages: query,
@@ -103,13 +109,13 @@ namespace BaseSource.Services.Services.Category
             var _repository = _unitOfWork.GetRepository<CategoryProject>();
 
             return await _repository.GetFirstOrDefaultAsync(
-                predicate: x => x.Id == id, disableTracking: true,
+                predicate: x => x.Id == id && x.DeletedTime == null && x.Published, disableTracking: true,
                 selector: x => new CategoryInfoDto
                 {
                     Name = x.Name,
                     Id = x.Id,
                     Published = x.Published,
-                    CreatedTime = x.CreatedTime
+                    CreatedTime = x.CreatedTime,
                 });
         }
 

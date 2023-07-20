@@ -86,10 +86,10 @@ namespace BaseSource.AppUI.Controllers
             await SignInCookie(result.ResultObj);
             if (!string.IsNullOrEmpty(returnUrl))
             {
-                return Redirect("/admin/projects");
+                return Redirect("/admin/project/index");
                 //return RedirectToLocal(returnUrl);
             }
-             return Redirect("/admin/projects");
+             return Redirect("/admin/project/index");
         }
 
 

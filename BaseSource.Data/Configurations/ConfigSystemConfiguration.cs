@@ -11,10 +11,9 @@ namespace BaseSource.Data.Configurations
             builder.ToTable("ConfigSystems");
 
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.BankNumber).HasMaxLength(50);
-            builder.Property(x => x.BankName).HasMaxLength(50);
-            builder.Property(x => x.BankAccountName).HasMaxLength(50);
-            builder.Property(x => x.LinkFBAdmin).HasMaxLength(500);
+            builder.Property(x => x.WebsiteName).HasMaxLength(500);
+            builder.Property(x => x.PhoneNumber).HasMaxLength(500);
+            builder.Property(x => x.LinkFB).HasMaxLength(500);
             builder.Property(x => x.LinkYoutube).HasMaxLength(500);
         }
     }

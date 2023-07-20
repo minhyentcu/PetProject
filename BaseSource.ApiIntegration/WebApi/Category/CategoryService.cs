@@ -29,7 +29,7 @@ namespace BaseSource.ApiIntegration.WebApi.Category
         public async Task<ApiResult<PagedResult<CategoryInfoDto>>> GetAllByFilterAsync(CategoryRequestDto model)
         {
             var client = _httpClientFactory.CreateClient(SystemConstants.BackendApiClient);
-            return await client.GetAsync<ApiResult<PagedResult<CategoryInfoDto>>>("/api/admin/categorys");
+            return await client.GetAsync<ApiResult<PagedResult<CategoryInfoDto>>>("/api/admin/categorys",model);
         }
 
         public async Task<ApiResult<CategoryInfoDto>> GetByIdAsync(int id)

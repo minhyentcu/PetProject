@@ -1,0 +1,23 @@
+﻿@model ConfigSettingVm
+@{
+    ViewData["Title"] = "About";
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<section class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Liên hệ</h2>
+            
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<section class="inner-page">
+    <div class="container">
+        @Html.Raw(Model.About)
+    </div>
+</section>
+

@@ -2,6 +2,7 @@
 @model List<CategoryInfoDto>
 @{
     ViewData["Title"] = "Danh sách Danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <section class="section">
@@ -40,10 +41,16 @@
                                         <tr>
                                             <td>@item.Name</td>
                                             <td>@item.CreatedTime.ToString("dd/MM/yyyy")</td>
-                                            <td>@item.Published</td>
+                                            <td>
+                                                <label class="custom-switch" style="padding-left:unset !important">
+                                                    <input type="checkbox" data-id="@item.Id" checked="@item.Published" class="custom-switch-input chboxPublished" />
+                                                    <span class="custom-switch-indicator"></span>
+                                                    <span class="custom-switch-description"></span>
+                                                </label>
+                                            </td>
                                             <td>
                                                 <button class="btn btn-primary" onclick="update('@item.Id','@item.Name')">Cập nhật</button>
-                                                <button class="btn btn-danger" onclick="delete('@item.Id')">Xóa</button>
+                                                <button class="btn btn-danger" onclick="deleteCategory('@item.Id')">Xóa</button>
                                             </td>
                                         </tr>
                                     }
@@ -71,7 +78,7 @@
                     <div class="form-group mb-4">
                         <label class="">Tên danh mục</label>
                         <div class="">
-                            <input name="Name" placeholder="Nhập tên danh mục" class="form-control" />
+                            <input name="Name" required placeholder="Nhập tên danh mục" class="form-control" />
                             <span class="text-danger"></span>
                         </div>
                     </div>
@@ -124,7 +131,7 @@
                         <label class="">Tên danh mục</label>
                         <div class="">
                             <input class="form-control" name="Id" type="hidden" />
-                            <input name="Name" placeholder="Nhập tên danh mục" class="form-control" />
+                            <input name="Name" required placeholder="Nhập tên danh mục" class="form-control" />
                             <span class="text-danger"></span>
                         </div>
                     </div>
@@ -149,7 +156,7 @@
                 $('#createModal').modal('show');
             });
         });
-        function delete (id){
+        function deleteCategory(id) {
             $('#deleteModal').modal('show');
             $('#formDelete input[name="Id"]').val(id);
         }
@@ -158,77 +165,102 @@
             $('#formUpdate input[name="Id"]').val(id);
             $('#formUpdate input[name="Name"]').val(name);
         }
-        $('body').on('submit','#formCreate',function(e){
+        $('body').on('submit', '#formCreate', function (e) {
             e.preventDefault();
-                $.ajax({
-                    type: "POST",
-                    url: "/admin/category/create",
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        switch (response.code) {
-                            case 1:
-                                window.location = '/admin/category';
-                                break;
-                            case -2:
+            $.ajax({
+                type: "POST",
+                url: "/admin/category/create",
+                data: $(this).serialize(),
+                success: function (response) {
+                    switch (response.code) {
+                        case 1:
+                            window.location = '/admin/category';
+                            break;
+                        case -2:
 
-                                iziToast.error({
-                                    title: 'Lỗi!',
-                                    message: response.err,
-                                    position: 'topRight'
-                                });
-                                break;
-                        }
-
+                            iziToast.error({
+                                title: 'Lỗi!',
+                                message: response.err,
+                                position: 'topRight'
+                            });
+                            break;
                     }
-                });
+
+                }
+            });
         })
-        $('body').on('submit','#formUpdate',function(e){
+        $('body').on('submit', '#formUpdate', function (e) {
             e.preventDefault();
-                $.ajax({
-                    type: "POST",
-                    url: "/admin/category/update",
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        switch (response.code) {
-                            case 1:
-                                window.location = '/admin/category';
-                                break;
-                            case -2:
+            $.ajax({
+                type: "POST",
+                url: "/admin/category/update",
+                data: $(this).serialize(),
+                success: function (response) {
+                    switch (response.code) {
+                        case 1:
+                            window.location = '/admin/category';
+                            break;
+                        case -2:
 
-                                iziToast.error({
-                                    title: 'Lỗi!',
-                                    message: response.err,
-                                    position: 'topRight'
-                                });
-                                break;
-                        }
-
+                            iziToast.error({
+                                title: 'Lỗi!',
+                                message: response.err,
+                                position: 'topRight'
+                            });
+                            break;
                     }
-                });
+
+                }
+            });
         })
-        $('body').on('submit','#formDelete',function(e){
+        $('body').on('submit', '#formDelete', function (e) {
             e.preventDefault();
-                $.ajax({
-                    type: "POST",
-                    url: "/admin/category/delete",
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        switch (response.code) {
-                            case 1:
-                                window.location = '/admin/category';
-                                break;
-                            case -2:
+            $.ajax({
+                type: "POST",
+                url: "/admin/category/delete",
+                data: $(this).serialize(),
+                success: function (response) {
+                    switch (response.code) {
+                        case 1:
+                            window.location = '/admin/category';
+                            break;
+                        case -2:
 
-                                iziToast.error({
-                                    title: 'Lỗi!',
-                                    message: response.err,
-                                    position: 'topRight'
-                                });
-                                break;
-                        }
-
+                            iziToast.error({
+                                title: 'Lỗi!',
+                                message: response.err,
+                                position: 'topRight'
+                            });
+                            break;
                     }
-                });
+
+                }
+            });
+        })
+        $('body').on('change', '.chboxPublished', function (e) {
+            let id=$(this).attr('data-id');
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: `/admin/category/Published?id=${id}`,
+                data: $(this).serialize(),
+                success: function (response) {
+                    switch (response.code) {
+                        case 1:
+                            window.location = '/admin/category';
+                            break;
+                        case -2:
+
+                            iziToast.error({
+                                title: 'Lỗi!',
+                                message: response.err,
+                                position: 'topRight'
+                            });
+                            break;
+                    }
+
+                }
+            });
         })
     </script>
 }

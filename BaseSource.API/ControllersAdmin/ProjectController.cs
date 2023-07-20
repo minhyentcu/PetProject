@@ -10,7 +10,7 @@ namespace BaseSource.API.ControllersAdmin
     {
         private readonly IPetProjectService _petProjectService;
         public ProjectController(
-            PetProjectService petProjectService
+            IPetProjectService petProjectService
             )
         {
             _petProjectService = petProjectService;
@@ -33,7 +33,7 @@ namespace BaseSource.API.ControllersAdmin
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] PetProjectCreateDto model)
+        public async Task<IActionResult> Create([FromForm] PetProjectCreateDto model)
         {
             var result = await _petProjectService.CreateAsync(model);
             if (!result.Key)
@@ -45,7 +45,7 @@ namespace BaseSource.API.ControllersAdmin
 
         [HttpPut]
         [Route("{id:int:min(1)}")]
-        public async Task<IActionResult> Update(int id, [FromBody] PetProjectUpdateDto model)
+        public async Task<IActionResult> Update(int id, [FromForm] PetProjectUpdateDto model)
         {
             var result = await _petProjectService.UpdateAsync(id, model);
             if (!result.Key)

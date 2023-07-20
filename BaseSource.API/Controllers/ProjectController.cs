@@ -2,6 +2,7 @@
 using BaseSource.ViewModels.Common;
 using BaseSource.ViewModels.Project;
 using EFCore.UnitOfWork.PageList;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BaseSource.API.Controllers
@@ -15,6 +16,7 @@ namespace BaseSource.API.Controllers
         }
         [HttpGet]
         [Route("/api/projects")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] ProjectClientRequestDto model)
         {
             var result = await _petProjectClientService.GetAllByFilterAsync(model);
@@ -22,6 +24,7 @@ namespace BaseSource.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetBySlug(string slug)
         {
             var result = await _petProjectClientService.GetByIdAsync(slug);

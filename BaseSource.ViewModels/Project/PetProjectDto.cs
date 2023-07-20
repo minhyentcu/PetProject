@@ -8,6 +8,7 @@ namespace BaseSource.ViewModels.Project
         public int Id { get; set; }
         public string Name { get; set; }
         public string CategoryName { get; set; }
+        public int CategoryProjectId { get; set; }
         public string Slug { get; set; }
         public string Description { get; set; }
         public string LinkDemo { get; set; }
@@ -37,6 +38,6 @@ namespace BaseSource.ViewModels.Project
     }
     public class PetProjectUpdateDto : PetProjectCreateDto
     {
-
+        public int Id { get; set; }
     }
 }

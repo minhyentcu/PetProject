@@ -1,6 +1,7 @@
 ﻿using BaseSource.Services.Services.Setting;
 using BaseSource.ViewModels.Common;
 using BaseSource.ViewModels.Setting;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BaseSource.API.ControllersAdmin
@@ -24,6 +25,15 @@ namespace BaseSource.API.ControllersAdmin
 
             // AddErrors(result.Value, string.Empty);
             return BadRequest(new ApiErrorResult<string>(result.Value));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("/api/setting")]
+        public async Task<IActionResult> GetSetting()
+        {
+            var result = await _configSettingService.GetSettingAsync();
+            return Ok(new ApiSuccessResult<object>(result));
         }
     }
 }

@@ -1,7 +1,118 @@
-﻿
+﻿@using BaseSource.ViewModels.Project;
+@model PetProjectUpdateDto
 @{
-    ViewData["Title"] = "Update";
+    ViewData["Title"] = "Cập nhật thông tin Project";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var categorys = ViewBag.Categorys as List<CategoryInfoDto>;
 }
 
-<h1>Update</h1>
+<section class="section">
+    <div class="section-header">
+        <h1>Cài đặt</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a href="#">Home</a></div>
+            <div class="breadcrumb-item"><a href="#">Thông tin</a></div>
+            <div class="breadcrumb-item">
+                @ViewData["Title"]
+            </div>
+        </div>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>@ViewData["Title"]</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="/admin/project/update" enctype="multipart/form-data">
+                            <div class="row">
+                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="col-12">
+                                    <h6>@ViewData["Title"]</h6>
+                                    <div class="form-group mb-4">
+                                        <label class="">Tên Project</label>
+                                        <div class="">
+                                            <input asp-for="Id" type="hidden" class="form-control" />
+                                            <input asp-for="Image" type="hidden" class="form-control" />
+                                            <input asp-for="Name" required placeholder="Nhập tên Project" class="form-control" />
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="">Link Demo</label>
+                                        <div class="">
+                                            <input asp-for="LinkDemo" required placeholder="Nhập link demo" class="form-control" />
+                                            <span asp-validation-for="LinkDemo" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="">Link Source Code</label>
+                                        <div class="">
+                                            <input asp-for="LinkSourceCode" required placeholder="Nhập link souce code" class="form-control" />
+                                            <span asp-validation-for="LinkSourceCode" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="">Danh mục</label>
+                                        <select asp-for="CategoryProjectId" class="form-control select2" required>
+                                            <option>--Chọn Danh mục--</option>
+                                            @foreach (var item in categorys)
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+
+                                        </select>
+                                        <span asp-validation-for="CategoryProjectId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group  mb-4">
+                                        <label >Hình ảnh</label>
+                                        <div class="">
+                                            <div id="image-preview" class="image-preview" style="background-image: url(@Model.Image); background-size: cover; background-position: center center;">
+                                                <label for="image-upload" id="image-label">Choose File</label>
+                                                <input type="file" asp-for="ImageFile" id="image-upload" />
+                                              
+                                            </div>
+                                              <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="">Thông tin Project</label>
+                                        <div class="">
+
+                                            <textarea asp-for="Description" class="summernote-simple"></textarea>
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group row mb-4">
+                               @* <label class="col-form-label text-md-right col-12 col-md-4 col-lg-4"></label>*@
+                                <div class="buttons col-sm-12 col-md-8">
+                                   
+                                    <button type="submit" class="btn btn-info btn-lg btn-icon btn-primary">Cập nhật</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+        $.uploadPreview({
+            input_field: "#image-upload",   // Default: .image-upload
+            preview_box: "#image-preview",  // Default: .image-preview
+            label_field: "#image-label",    // Default: .image-label
+            label_default: "Choose File",   // Default: Choose File
+            label_selected: "Change File",  // Default: Change File
+            no_label: false,                // Default: false
+            success_callback: null          // Default: null
+        });
+    </script>
+}
 

@@ -58,7 +58,7 @@ namespace BaseSource.Data.Migrations
                         new
                         {
                             Id = "c1105ce5-9dbc-49a9-a7d5-c963b6daa62a",
-                            ConcurrencyStamp = "f6b8d682-2e67-40de-b67c-1410e39cf869",
+                            ConcurrencyStamp = "fc17e0f6-f8ef-45f4-8553-a5ab199d7e99",
                             Description = "Administrator role",
                             Name = "Admin",
                             NormalizedName = "Admin"
@@ -188,14 +188,14 @@ namespace BaseSource.Data.Migrations
                         {
                             Id = "ffded6b0-3769-4976-841b-69459049a62d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5ea40646-8bfd-49a7-aceb-08e7925a1500",
+                            ConcurrencyStamp = "e6438326-9f60-4c12-9f91-9fa852c5cc33",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "superadmin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBbIx+TdFYk8guC+4XlSrzz8GiESHgafGH4vJ5josbUkqt3n41A1uc1BdVYx5Mj+ow==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPrN0XhpT0nlm+JPKUZVx2b5T0iQEN4/rQFEr2krFEaJNY9mMqeXi0b/5fnCXLa2qg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -328,23 +328,22 @@ namespace BaseSource.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("BankAccountName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("About")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BankName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("BankNumber")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LinkFBAdmin")
+                    b.Property<string>("LinkFB")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("LinkYoutube")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("WebsiteName")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 

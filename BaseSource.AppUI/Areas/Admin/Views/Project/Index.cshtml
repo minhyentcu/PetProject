@@ -2,6 +2,7 @@
 @model List<PetProjectDto>
 @{
     ViewData["Title"] = "Danh sách Project";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <section class="section">
@@ -42,9 +43,15 @@
                                             <td>@item.Name</td>
                                             <td><span class="badge badge-primary">@item.CategoryName</span> </td>
                                             <td>@item.CreatedTime.ToString("dd/MM/yyyy")</td>
-                                            <td>@item.Published</td>
                                             <td>
-                                                <button class=" btn btn-primary">Chi tiết</button>
+                                                <label class="custom-switch" style="padding-left:unset !important">
+                                                    <input type="checkbox" data-id="@item.Id" checked="@item.Published" class="custom-switch-input chboxPublished" />
+                                                    <span class="custom-switch-indicator"></span>
+                                                    <span class="custom-switch-description"></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <a class=" btn btn-primary" href="/admin/project/update?id=@item.Id">Cập nhật</a>
                                                 <button class="btn btn-danger" onclick="delete('@item.Id')">Xóa</button>
                                             </td>
                                         </tr>
@@ -67,7 +74,41 @@
             $("#tableProject").DataTable({
 
             });
+            $('body').on('change', '.chboxPublished', function (e) {
+                let id = $(this).attr('data-id');
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: `/admin/project/Published?id=${id}`,
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        switch (response.code) {
+                            case 1:
+                                //iziToast.success({
+                                //    title: 'Thành công!',
+                                //    message: 'Cập nhật thành công',
+                                //    position: 'topRight'
+                                //});
+                                setTimeout(function () {
+                                    window.location = '/admin/project';
+                                }, 120);
+
+                                break;
+                            case -2:
+
+                                iziToast.error({
+                                    title: 'Lỗi!',
+                                    message: response.err,
+                                    position: 'topRight'
+                                });
+                                break;
+                        }
+
+                    }
+                });
+            })
         });
+
     </script>
 }
 

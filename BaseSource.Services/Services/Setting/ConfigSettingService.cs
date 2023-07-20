@@ -35,11 +35,11 @@ namespace BaseSource.Services.Services.Setting
                 var settingEntity = await _repository.GetFirstOrDefaultAsync(disableTracking: false);
                 if (settingEntity != null)
                 {
-                    settingEntity.BankNumber = model.BankNumber;
                     settingEntity.LinkYoutube = model.LinkYoutube;
-                    settingEntity.LinkFBAdmin = model.LinkFBAdmin;
-                    settingEntity.BankName = model.BankName;
-                    settingEntity.BankAccountName = model.BankAccountName;
+                    settingEntity.LinkFB = model.LinkFB;
+                    settingEntity.WebsiteName = model.WebsiteName;
+                    settingEntity.PhoneNumber = model.PhoneNumber;
+                    settingEntity.About = model.About;
                     _repository.Update(settingEntity);
                     await _unitOfWork.SaveChangesAsync();
                 }

@@ -100,6 +100,7 @@ namespace BaseSource.ViewModels.Common
                     case 5:
                     case 6:
                     case 8:
+                    case 9:
                     case 12:
                     case 15:
                     case 20:
