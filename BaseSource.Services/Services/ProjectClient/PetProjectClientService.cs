@@ -49,6 +49,8 @@ namespace BaseSource.Services.Services.ProjectClient
                     LinkSourceCode = x.LinkSourceCode,
                     Name = x.Name.Trim(),
                     Slug = x.Slug,
+                    CreatedTime = x.CreatedTime,
+                    CategoryName = x.CategoryProject.Name
                 }, orderBy: x => x.OrderByDescending(i => i.CreatedTime),
                 pageIndex: model.Page, pageSize: model.PageSize);
         }
@@ -57,7 +59,7 @@ namespace BaseSource.Services.Services.ProjectClient
         {
             var _repository = _unitOfWork.GetRepository<PetProject>();
             return await _repository.GetFirstOrDefaultAsync(
-                predicate: x => x.Slug == slug && x.DeletedTime==null && x.Published, disableTracking: true,
+                predicate: x => x.Slug == slug && x.DeletedTime == null && x.Published, disableTracking: true,
                 selector: x => new PetProjectDto
                 {
                     Description = x.Description,
@@ -66,7 +68,9 @@ namespace BaseSource.Services.Services.ProjectClient
                     LinkDemo = x.LinkDemo,
                     LinkSourceCode = x.LinkSourceCode,
                     Name = x.Name,
-                    Slug = x.Slug
+                    Slug = x.Slug,
+                    CategoryName = x.CategoryProject.Name,
+                    CreatedTime = x.CreatedTime,
                 });
         }
     }
