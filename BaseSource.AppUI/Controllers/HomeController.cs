@@ -2,6 +2,7 @@
 using BaseSource.ApiIntegration.WebApi.Setting;
 using BaseSource.ViewModels.Project;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BaseSource.AppUI.Controllers
@@ -33,7 +34,7 @@ namespace BaseSource.AppUI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ProjectInfo(string slug)
         {
-            var projectInfo = await _projectApiClient.GetByIdAsync(slug);
+            var projectInfo = await _projectApiClient.GetByIdAsync(slug,IpConnection);
             if (projectInfo == null || projectInfo.ResultObj == null)
             {
                 return NotFound();
@@ -61,7 +62,7 @@ namespace BaseSource.AppUI.Controllers
                 Page = page,
                 PageSize = 9
             });
-            return PartialView("_ProjectPaging",projects.ResultObj.Items);
+            return PartialView("_ProjectPaging", projects.ResultObj.Items);
         }
         [Route("/bang-xep-hang")]
         [AllowAnonymous]
@@ -73,6 +74,19 @@ namespace BaseSource.AppUI.Controllers
                 PageSize = 9
             });
             return View(projects.ResultObj.Items);
+        }
+
+        [Route("/project/voting")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Voting(VoteProjectUpdateDto model)
+        {
+            model.IP = IpConnection;
+            var result = await _projectApiClient.VotingAsync(model);
+            if (result == null || !result.IsSuccessed)
+            {
+                return Json(new { isSuccess = false, message = result?.Message ?? "Lỗi không cập nhật!" });
+            }
+            return Json(new { isSuccess = true });
         }
     }
 }

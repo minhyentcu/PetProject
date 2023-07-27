@@ -19,10 +19,10 @@ namespace BaseSource.ApiIntegration.WebApi.ProjectClient
             return await client.GetAsync<ApiResult<PagedResult<PetProjectDto>>>("/api/projects", model);
         }
 
-        public async Task<ApiResult<PetProjectDto>> GetByIdAsync(string slug)
+        public async Task<ApiResult<PetProjectDto>> GetByIdAsync(string slug, string ipConnect)
         {
             var client = _httpClientFactory.CreateClient(SystemConstants.BackendApiClient);
-            return await client.GetAsync<ApiResult<PetProjectDto>>($"/api/project?slug={slug}");
+            return await client.GetAsync<ApiResult<PetProjectDto>>($"/api/project?slug={slug}&ip={ipConnect}");
         }
 
         public async Task<ApiResult<string>> VotingAsync(VoteProjectUpdateDto model)

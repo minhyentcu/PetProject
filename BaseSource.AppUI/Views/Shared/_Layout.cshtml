@@ -1,113 +1,148 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Danh sách Project</title>
 
-    <title>Danh sách project</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="/admin-themes/assets/modules/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/admin-themes/assets/modules/fontawesome/css/all.min.css">
 
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="~/web-themes/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/web-themes/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="~/web-themes/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="~/web-themes/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="~/web-themes/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="~/web-themes/assets/css/style.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <!-- CSS Libraries -->
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/admin-themes/assets/css/style.css">
+    <link rel="stylesheet" href="/admin-themes/assets/css/components.css">
+    <style>
+        .navbar-bg{
+            height: 70px !important;
+        }
+    </style>
 </head>
 
-<body>
+<body class="layout-3">
+    <div id="app">
+        <div class="main-wrapper container">
+            <div class="navbar-bg"></div>
+            <nav class="navbar navbar-expand-lg main-navbar">
+                <a href="index.html" class="navbar-brand sidebar-gone-hide">WEBSITENAME</a>
+                <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
+                <div class="nav-collapse">
+                    <a class="sidebar-gone-show nav-collapse-toggle nav-link" href="#">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                  @*  <ul class="navbar-nav">
+                        <li class="nav-item active"><a href="#" class="nav-link">Application</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Report Something</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Server Status</a></li>
+                    </ul>*@
+                </div>
+                <form class="form-inline ml-auto">
+                    <ul class="navbar-nav">
+                        <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+                    </ul>
 
-    <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top d-flex align-items-center">
-        <div class="container d-flex align-items-center">
-
-            <div class="logo me-auto">
-                @await Component.InvokeAsync("Header")
-
-                <!-- Uncomment below if you prefer to use an image logo -->
-                <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-            </div>
-
-            <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
-                    <li><a class="nav-link scrollto link-header  " id="link-home" href="/">Home</a></li>
-                    <li><a class="nav-link scrollto link-header  " id="link-ranking" href="/bang-xep-hang">Bảng xếp hạng</a></li>
-                    <li><a class="nav-link scrollto link-header " id="link-about" href="/lien-he">Liên hệ</a></li>
-                    <li><a class="nav-link scrollto " href="/auth/login">Đăng nhập</a></li>
-
-
+                </form>
+                <ul class="navbar-nav navbar-right">
+                    <li class="nav-item active"><a href="#" class="nav-link">Application</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Report Something</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Server Status</a></li>
                 </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
-        </div>
-    </header><!-- End Header -->
-    <main id="main">
-        <hr />
-        @RenderBody()
-    </main><!-- End #main -->
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
+                <ul class="navbar-nav navbar-right">
+                
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                            <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+                            <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-title">Logged in 5 min ago</div>
+                            <a href="features-profile.html" class="dropdown-item has-icon">
+                                <i class="far fa-user"></i> Profile
+                            </a>
+                            <a href="features-activities.html" class="dropdown-item has-icon">
+                                <i class="fas fa-bolt"></i> Activities
+                            </a>
+                            <a href="features-settings.html" class="dropdown-item has-icon">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item has-icon text-danger">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
 
-
-
-        <div class="container d-md-flex py-4">
-
-            <div class="me-md-auto text-center text-md-start">
-                <div class="copyright">
-                    &copy; Copyright <strong><span>Kteam</span></strong>. All Rights Reserved
+           @* <nav class="navbar navbar-secondary navbar-expand-lg">
+                <div class="container">
+                    <h2>Danh sách Project</h2>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a href="index-0.html" class="nav-link">General Dashboard</a></li>
+                                <li class="nav-item"><a href="index.html" class="nav-link">Ecommerce Dashboard</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item active">
+                            <a href="#" class="nav-link"><i class="far fa-heart"></i><span>Top Navigation</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="far fa-clone"></i><span>Multiple Dropdown</span></a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a href="#" class="nav-link">Not Dropdown Link</a></li>
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link has-dropdown">Hover Me</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
+                                        <li class="nav-item dropdown">
+                                            <a href="#" class="nav-link has-dropdown">Link 2</a>
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
+                                                <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
+                                                <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item"><a href="#" class="nav-link">Link 3</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-                <div class="credits">
+            </nav>*@
 
-                    Designed by <a href="https://howkteam.vn/">Kteam</a>
-                </div>
+            <!-- Main Content -->
+            <div class="main-content" style="padding-top:80px !important">
+                @RenderBody()
+
             </div>
-            @await Component.InvokeAsync("Footer")
+            <footer class="main-footer">
+                <div class="footer-left">
+                    Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
+                </div>
+                <div class="footer-right">
+                </div>
+            </footer>
         </div>
-    </footer><!-- End Footer -->
+    </div>
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!-- General JS Scripts -->
+    <script src="/admin-themes/assets/modules/jquery.min.js"></script>
+    <script src="/admin-themes/assets/modules/popper.js"></script>
+    <script src="/admin-themes/assets/modules/tooltip.js"></script>
+    <script src="/admin-themes/assets/modules/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/admin-themes/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="/admin-themes/assets/modules/moment.min.js"></script>
+    <script src="/admin-themes/assets/js/stisla.js"></script>
 
-    <!-- Vendor JS Files -->
-    <script src="~/web-themes/assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="~/web-themes/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/web-themes/assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="~/web-themes/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="~/web-themes/assets/vendor/swiper/swiper-bundle.min.js"></script>
-    @*    <script src="~/web-themes/assets/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="~/web-themes/assets/vendor/php-email-form/validate.js"></script>*@
-
-    <!-- Template Main JS File -->
-    <script src="~/web-themes/assets/js/main.js"></script>
+    <!-- JS Libraies -->
+    <!-- Page Specific JS File -->
+    <!-- Template JS File -->
+    <script src="/admin-themes/assets/js/scripts.js"></script>
+    <script src="/admin-themes/assets/js/custom.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script>
-        console.log(window.location.pathname);
-        if (window.location.pathname === "/lien-he") {
-            var element = document.getElementById("link-about");
-            element.classList.add("active");
-        } else if (window.location.pathname === "/bang-xep-hang") {
-            var element = document.getElementById("link-ranking");
-            element.classList.add("active");
-        }
-        else {
-            var element = document.getElementById("link-home");
-            element.classList.add("active");
-        }
-    </script>
-
 </body>
-
 </html>

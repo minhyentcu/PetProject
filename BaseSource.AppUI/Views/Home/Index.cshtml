@@ -4,34 +4,89 @@
 @{
     ViewData["Title"] = "Danh sách project";
 }
+<style>
+    .article {
+        margin-bottom: unset !important;
+    }
 
+        .article .article-details {
+            padding: 5px 20px !important;
+        }
 
-<!-- ======= Portfolio Section ======= -->
-<section id="portfolio" class="portfolio">
-    <div class="container">
+        .article.article-style-c .article-details .article-category {
+            letter-spacing: 2px;
+        }
 
-        <div class="section-title">
-            <h2>Danh sách Project</h2>
-            <p>Explore 50+ Beginner-Friendly Projects Built with HTML, CSS, and Vanilla JavaScript to Boost Your Web Development Skills</p>
-        </div>
+            .article.article-style-c .article-details .article-category a {
+                font-size: 12px;
+            }
+</style>
 
+<section class="section">
+    <div class="section-header">
+        <h1>Danh sách Project</h1>
+        @* <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+        <div class="breadcrumb-item"><a href="#">Layout</a></div>
+        <div class="breadcrumb-item">Top Navigation</div>
+        </div>*@
+    </div>
 
+    <div class="section-body">
+        @*<h2 class="section-title">Articles</h2>
+        <p class="section-lead">This article component is based on card and flexbox.</p>*@
 
-
-        <div class="row portfolio-container project_data" style=" height:unset !important ;position: unset !important">
-
+        <div class="row project_data row-eq-height">
             @foreach (var item in Model)
             {
-                <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" >
-                    <div class="portfolio-wrap">
-                        <figure>
-                            <a href="/project/@item.Slug">  <img src="@item.Image" class="img-fluid" alt="" /></a>
+                <div class="col-12 col-md-4 col-lg-4 mb-3">
+                    <article class="article article-style-c h-100">
+                        <div class="article-header">
+                            <a href="/project/@item.Slug">
+                                <div class="article-image" data-background="@item.Image" style="background-image: url('@item.Image');"></div>
+                            </a>
+                            <div class="article-badge">
+                                <div class="article-badge-item bg-danger">
+                                    @* <i class="fas fa-fire"></i> *@
+                                    @item.CategoryName
+                                </div>
+                            </div>
+                        </div>
+                        <div class="article-details">
+                            <div class="article-category">
+                                <a href="#">
+                                    @if (item.TotalVote > 0)
+                                    {
+                                        <span class="text-success">
+                                            <i class="fas fa-caret-down"></i>
+                                            @item.TotalVote
+                                        </span>
+                                    }
+                                    else if (item.TotalVote < 0)
+                                    {
 
-                            @* <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>*@
-                        </figure>
+                                        <span class="text-danger">
+                                            <i class="fas fa-caret-down"></i>
+                                            @item.TotalVote
+                                        </span>
 
-                        <div class="portfolio-info" style="text-align:unset !important; height:110px !important; text-transform: unset !important;padding:12px !important">
-                            <h6><a href="/project/@item.Slug"> <b>@item.Name</b></a></h6>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-gray">
+                                            <i class="fas fa-solid fa-minus"></i>
+                                        </span>
+                                    }
+
+                                </a>
+                                <div class="bullet"></div>
+                                <a href="#">@item.CreatedTime.ToString("dd/MM/yyyy")</a>
+                                <div class="text-muted text-small">
+                                </div>
+                            </div>
+                            <div class="article-title">
+                                <h2><a href="/project/@item.Slug">@item.Name</a></h2>
+                            </div>
                             <p>
                                 @if (!string.IsNullOrEmpty(item.Description))
                                 {
@@ -43,26 +98,17 @@
                                     <b style="color:black !important;text-transform: initial !important">@data</b>
                                 }
                             </p>
+
                         </div>
-                    </div>
+                    </article>
                 </div>
             }
 
-        </div>
-        @* <div class="row">
-        <div class="col-lg-12">
-        <ul id="portfolio-flters">
-        <li data-filter="*" class="filter-active">Next</li>
-        <li data-filter=".filter-app">1</li>
-        <li data-filter=".filter-card">2</li>
-        <li data-filter=".filter-web">3</li>
-        </ul>
-        </div>
-        </div>*@
 
-
+        </div>
     </div>
-</section><!-- End Portfolio Section -->
+
+</section>
 @section Scripts{
 
     <script>
@@ -85,7 +131,7 @@
                         else {
                             pageIndex = 0;
                         }
-                      
+
                     });
                 }
 

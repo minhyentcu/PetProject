@@ -5,64 +5,165 @@
 }
 <style>
     .swiper-pagination {
-        display:none !important;
+        display: none !important;
+    }
+
+    .fa-thumbs-up {
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .fa-thumbs-down {
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .fas.fa-thumbs-up {
+        color: #2061cf;
+    }
+
+    .fas.fa-thumbs-down {
+        color: #de2012;
     }
 </style>
 <!-- ======= Breadcrumbs ======= -->
-<section id="breadcrumbs" class="breadcrumbs">
+@*<section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h2>Chi tiết Project</h2>
-           
+
         </div>
     </div>
-</section>
+</section>*@
 <!-- End Breadcrumbs -->
-
 <!-- ======= Portfolio Details Section ======= -->
 <section id="portfolio-details" class="portfolio-details">
     <div class="container">
         <div class="row gy-4">
-            <div class="col-lg-8">
-                <div class="portfolio-details-slider swiper">
-                    <div class="swiper-wrapper align-items-center">
-                        <div class="swiper-slide">
-                            <img src="@Model.Image" alt="" />
-                        </div>
+            <div class="col-lg-12">
 
-                        <div class="swiper-slide">
-                            <img src="@Model.Image" alt="" />
-                        </div>
-
-                        <div class="swiper-slide">
-                            <img src="@Model.Image" alt="" />
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Thông tin Project : @Model.Name</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100" src="@Model.Image" alt="First slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="@Model.Image" alt="Second slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="@Model.Image" alt="Third slide">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="swiper-pagination"></div>
+                    <div class="card-footer">
+                        <div class="portfolio-info">
+
+                            <ul>
+                                <li><strong>Danh mục</strong>: @Model.CategoryName</li>
+                                <li><strong>Người tạo</strong>: @Model.CategoryName</li>
+                                <li><strong>Ngày tạo</strong>: @Model.CreatedTime.ToString("dd/MM/yyyy")</li>
+                                <li><strong>Live Demo(Preview)</strong>: <a target="_blank" href="@Model.LinkDemo">Preview</a></li>
+                                <li><strong>Source Code (Github)</strong>: <a target="_blank" href="@Model.LinkSourceCode"> Source Code</a></li>
+                                <li>
+                                    <strong>Đánh giá:</strong>:
+                                    <i class="@(Model.VoteUp?"fas":"far") fa-thumbs-up fa-voting" data-project="@Model.Id"></i>
+                                    <i class="@(Model.VoteDown?"fas":"far") fa-thumbs-down fa-voting" data-project="@Model.Id"></i>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="portfolio-description">
+                            <h6>Chi tiết project</h6>
+                            <div style="text-align: justify !important;">
+                                @Html.Raw(Model.Description)
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="portfolio-info">
-                    <h3>Thông tin Project</h3>
-                    <ul>
-                        <li><strong>Danh mục</strong>: @Model.CategoryName</li>
-                        <li><strong>Ngày tạo</strong>: @Model.CreatedTime.ToString("dd/MM/yyyy")</li>
-                         <li><strong>Live Demo(Preview)</strong>: <a target="_blank" href="@Model.LinkDemo">Preview</a></li>
-                        <li><strong>Source Code (Github)</strong>: <a target="_blank" href="@Model.LinkSourceCode"> Source Code</a></li>
-                    </ul>
-                </div>
-                <div class="portfolio-description">
-                    <h2>Chi tiết project</h2>
-                    <div style="text-align: justify !important;">
-                        @Html.Raw(Model.Description)
-                    </div>
-                    
-                </div>
-            </div>
         </div>
+
+
     </div>
+
 </section>
 <!-- End Portfolio Details Section -->
+@section Scripts{
+    <script>
+        $('body').on('click', '.fa-voting', function () {
+            let typeUp = $(this).hasClass('fa-thumbs-up') ? true : false;
+            let projectId = $(this).attr('data-project');
+            if (typeUp) {
+                $('.fa-thumbs-down').removeClass('fas').addClass('far');
+                if ($(this).hasClass('far')) {
+                    $(this).removeClass('far').addClass('fas');
+                } else {
+                    $(this).removeClass('fas').addClass('far');
+                }
+            }
+            else {
+                $('.fa-thumbs-up').removeClass('fas').addClass('far');
+                if ($(this).hasClass('far')) {
+                    $(this).removeClass('far').addClass('fas');
+                } else {
+                    $(this).removeClass('fas').addClass('far');
+                }
+            }
+            $.ajax({
+                cache: false,
+                url: "/project/voting",
+                type: "POST",
+                data: { isUp: typeUp, isDown: !typeUp, projectId: projectId },
+                success: function (response) {
+                    console.log(response);
+                    if (response.isSuccess) {
 
+                    } else {
 
+                    }
+
+                },
+                error: function (data) {
+                    console.log(data.status + ':' + data.statusText, data.responseText);
+                }
+            });
+
+        });
+        //$('body').on('click', '.fa-thumbs-down', function () {
+        //    let projectId = $(this).attr('data-project');
+        //    $('.fa-thumbs-up').removeClass('fas').addClass('far');
+        //    if ($(this).hasClass('far')) {
+        //        $(this).removeClass('far').addClass('fas');
+        //    } else {
+        //        $(this).removeClass('fas').addClass('far');
+        //    }
+        //    $.ajax({
+        //        cache: false,
+        //        url: "/project/voting",
+        //        type: "POST",
+        //        data: { isDown: true, projectId: projectId },
+        //        success: function (response) {
+        //            console.log(response);
+        //            if (response.isSuccess) {
+
+        //            } else {
+
+        //            }
+
+        //        },
+        //        error: function (data) {
+        //            console.log(data.status + ':' + data.statusText, data.responseText);
+        //        }
+        //    });
+        //});
+    </script>
+}
