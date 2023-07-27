@@ -25,10 +25,23 @@ namespace BaseSource.API.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetBySlug(string slug)
+        public async Task<IActionResult> GetBySlug(string slug, string ip)
         {
-            var result = await _petProjectClientService.GetByIdAsync(slug);
+            var result = await _petProjectClientService.GetByIdAsync(slug, ip);
             return Ok(new ApiSuccessResult<PetProjectDto>(result));
+        }
+
+        [HttpPatch]
+        [AllowAnonymous]
+        [Route("voting")]
+        public async Task<IActionResult> Voting([FromBody] VoteProjectUpdateDto model)
+        {
+            var result = await _petProjectClientService.VotingAsync(model);
+            if (!result.Key)
+            {
+                return Ok(new ApiErrorResult<string>(result.Value.ToString()));
+            }
+            return Ok(new ApiSuccessResult<object>(result.Value));
         }
     }
 }

@@ -107,7 +107,7 @@ namespace BaseSource.Services.Services.Project
         {
             var _repository = _unitOfWork.GetRepository<PetProject>();
             var query = _repository.Queryable().AsNoTracking();
-            query = query.Where(x => x.DeletedTime == null);
+            query = query.Where(x => x.DeletedTime == null );
             if (!string.IsNullOrEmpty(model.Name))
             {
                 model.Name = model.Name.Trim().ToLower();

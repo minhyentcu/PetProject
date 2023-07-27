@@ -16,4 +16,9 @@
         Video,
         Doc
     }
+    public enum VoteStatus : byte
+    {
+        Up = 1,
+        Down = 2,
+    }
 }

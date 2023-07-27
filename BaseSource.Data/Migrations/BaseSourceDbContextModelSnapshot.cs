@@ -58,7 +58,7 @@ namespace BaseSource.Data.Migrations
                         new
                         {
                             Id = "c1105ce5-9dbc-49a9-a7d5-c963b6daa62a",
-                            ConcurrencyStamp = "fc17e0f6-f8ef-45f4-8553-a5ab199d7e99",
+                            ConcurrencyStamp = "5ac6e26a-e1e7-4669-9890-3294ae4bb1ec",
                             Description = "Administrator role",
                             Name = "Admin",
                             NormalizedName = "Admin"
@@ -188,14 +188,14 @@ namespace BaseSource.Data.Migrations
                         {
                             Id = "ffded6b0-3769-4976-841b-69459049a62d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e6438326-9f60-4c12-9f91-9fa852c5cc33",
+                            ConcurrencyStamp = "557149af-df56-4f06-a3cc-d810e733b4f9",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "superadmin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPrN0XhpT0nlm+JPKUZVx2b5T0iQEN4/rQFEr2krFEaJNY9mMqeXi0b/5fnCXLa2qg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPr/WXq9J7enwijH4tpAwOYEz7mai90Iulvx+pB1Shpq6/YpsLrCqD1Ur7vX9i9Y/A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -400,6 +400,34 @@ namespace BaseSource.Data.Migrations
                     b.ToTable("PetProjects", (string)null);
                 });
 
+            modelBuilder.Entity("BaseSource.Data.Entities.VoteProject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Down")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("IP")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("PetProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Up")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetProjectId");
+
+                    b.ToTable("VoteProjects", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.EntityFrameworkCore.AutoHistory", b =>
                 {
                     b.Property<int>("Id")
@@ -506,6 +534,17 @@ namespace BaseSource.Data.Migrations
                     b.Navigation("CategoryProject");
                 });
 
+            modelBuilder.Entity("BaseSource.Data.Entities.VoteProject", b =>
+                {
+                    b.HasOne("BaseSource.Data.Entities.PetProject", "PetProject")
+                        .WithMany("VoteProjects")
+                        .HasForeignKey("PetProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PetProject");
+                });
+
             modelBuilder.Entity("BaseSource.Data.Entities.AppRole", b =>
                 {
                     b.Navigation("RoleClaims");
@@ -527,6 +566,11 @@ namespace BaseSource.Data.Migrations
             modelBuilder.Entity("BaseSource.Data.Entities.CategoryProject", b =>
                 {
                     b.Navigation("PetProjects");
+                });
+
+            modelBuilder.Entity("BaseSource.Data.Entities.PetProject", b =>
+                {
+                    b.Navigation("VoteProjects");
                 });
 #pragma warning restore 612, 618
         }

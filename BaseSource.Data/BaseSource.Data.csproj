@@ -25,4 +25,7 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
 		<PackageReference Include="UnitOfWork.EntityFrameworkCore" Version="6.0.3" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\BaseSource.Shared\BaseSource.Shared.csproj" />
+	</ItemGroup>
 </Project>

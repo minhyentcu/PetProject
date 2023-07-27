@@ -36,8 +36,8 @@
         <div class="container d-flex align-items-center">
 
             <div class="logo me-auto">
-                 @await Component.InvokeAsync("Header")
-                
+                @await Component.InvokeAsync("Header")
+
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
@@ -45,6 +45,7 @@
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a class="nav-link scrollto link-header  " id="link-home" href="/">Home</a></li>
+                    <li><a class="nav-link scrollto link-header  " id="link-ranking" href="/bang-xep-hang">Bảng xếp hạng</a></li>
                     <li><a class="nav-link scrollto link-header " id="link-about" href="/lien-he">Liên hệ</a></li>
                     <li><a class="nav-link scrollto " href="/auth/login">Đăng nhập</a></li>
 
@@ -97,7 +98,11 @@
         if (window.location.pathname === "/lien-he") {
             var element = document.getElementById("link-about");
             element.classList.add("active");
-        } else {
+        } else if (window.location.pathname === "/bang-xep-hang") {
+            var element = document.getElementById("link-ranking");
+            element.classList.add("active");
+        }
+        else {
             var element = document.getElementById("link-home");
             element.classList.add("active");
         }

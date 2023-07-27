@@ -6,6 +6,8 @@ namespace BaseSource.Services.Services.ProjectClient
     public interface IPetProjectClientService
     {
         Task<IPagedList<PetProjectDto>> GetAllByFilterAsync(ProjectClientRequestDto model);
-        Task<PetProjectDto> GetByIdAsync(string slug);
+        Task<PetProjectDto> GetByIdAsync(string slug, string ip);
+        Task<KeyValuePair<bool, string>> VotingAsync(VoteProjectUpdateDto model);
+
     }
 }

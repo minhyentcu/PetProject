@@ -14,5 +14,6 @@
         public DateTime? DeletedTime { get; set; }
         public bool Published { get; set; }
         public CategoryProject CategoryProject { get; set; }
+        public ICollection<VoteProject> VoteProjects { get; set; }
     }
 }

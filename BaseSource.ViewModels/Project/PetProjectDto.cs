@@ -16,6 +16,17 @@ namespace BaseSource.ViewModels.Project
         public string Image { get; set; }
         public DateTime CreatedTime { get; set; }
         public bool Published { get; set; }
+        public int TotalVote
+        {
+            get
+            {
+                return TotalVoteUp - TotalVoteDown;
+            }
+        }
+        public int TotalVoteUp { get; set; } = 0;
+         public int TotalVoteDown { get; set; } = 0;
+        public bool VoteUp { get; set; } = false;
+        public bool VoteDown { get; set; } = false;
     }
     public class PetProjectCreateDto
     {
@@ -35,9 +46,17 @@ namespace BaseSource.ViewModels.Project
     public class ProjectClientRequestDto : PageQuery
     {
         public string Name { get; set; }
+        public string IP { get; set; }
     }
     public class PetProjectUpdateDto : PetProjectCreateDto
     {
         public int Id { get; set; }
+    }
+    public class VoteProjectUpdateDto
+    {
+        public int ProjectId { get; set; }
+        public string IP { get; set; }
+        public bool IsUp { get; set; }
+        public bool IsDown { get; set; }
     }
 }

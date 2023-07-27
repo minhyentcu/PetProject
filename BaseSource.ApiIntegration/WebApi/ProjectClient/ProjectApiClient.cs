@@ -24,5 +24,11 @@ namespace BaseSource.ApiIntegration.WebApi.ProjectClient
             var client = _httpClientFactory.CreateClient(SystemConstants.BackendApiClient);
             return await client.GetAsync<ApiResult<PetProjectDto>>($"/api/project?slug={slug}");
         }
+
+        public async Task<ApiResult<string>> VotingAsync(VoteProjectUpdateDto model)
+        {
+            var client = _httpClientFactory.CreateClient(SystemConstants.BackendApiClient);
+            return await client.PatchAsync<ApiResult<string>>($"/api/project/voting", model);
+        }
     }
 }

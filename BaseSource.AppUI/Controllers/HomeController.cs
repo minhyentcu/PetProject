@@ -63,5 +63,16 @@ namespace BaseSource.AppUI.Controllers
             });
             return PartialView("_ProjectPaging",projects.ResultObj.Items);
         }
+        [Route("/bang-xep-hang")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ProjectRanking()
+        {
+            var projects = await _projectApiClient.GetAllByFilterAsync(new ProjectClientRequestDto
+            {
+                Page = 1,
+                PageSize = 9
+            });
+            return View(projects.ResultObj.Items);
+        }
     }
 }
